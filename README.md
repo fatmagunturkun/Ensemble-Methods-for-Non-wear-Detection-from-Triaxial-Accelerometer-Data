@@ -1,4 +1,4 @@
-# Project Summary:
+![image](https://github.com/user-attachments/assets/31403148-67a8-42b0-8cde-89024e936ade)# Project Summary:
 
 This study introduces a novel ensemble classification method that leverages the predictions of existing wear-time detection algorithms to improve the accuracy of classifying wear time versus physical activity, sleep, and sedentary time. The Choi [1], Troiano [2], and hidden Markov model [3] algorithms were utilized, and their predictions were combined using two unsupervised ensemble methods [4,5]. Detecting intervals of accelerometer wear time in field-collected data is a challenging problem and may lead to data that does not reflect actual physical activity. By accurately identifying non-wear periods, this method can reduce biases in data analysis and lead to more reliable health outcome assessments.
 
@@ -8,12 +8,14 @@ Activity signals from three datasets were analyzed: the Sleep Study with 15 chil
 
 # Repository Structure:
 
-The repo consists of the src folder, which has two files listed below:
+The repo consists of five files listed below:
 
-1. text_preprocessing_training: This Python file contains the necessary code for processing text data from the notes, extracting feature embeddings from LLaMA-13b, and training the network using feature embeddings.
-
-2. downstream_analysis:This notebook contains the codes used for downstream analysis and figures.
-
+1. WeartimeDetection: This R file contains the necessary code for weartime detection using the Choi, Troiano and HMM algorithms on the specified accelerometer data.
+2. RunWeartimeDetection: This R file contains the necessary code for running wear time detection algorithms across all subjects.
+3. SUMMA_BI: This R file contains the necessary code for wear time detection using two unsupervised ensemble methods, SUMMA and BI, utilizing the predictions of existing algorithms such as the Choi, Troiano, and HMM algorithms.
+4. SimulateDataset: This script generates data that simulates n-days of accelerometer data, where the weartime is from the GOALS study and the nonwear is from the Sleep study.
+   Each simulated sample represents n-day accelerometry readings for a simulated subject.
+5. confusion_matrix: This script generates confusion matrix of different predictors
 
 # Citations:
 
