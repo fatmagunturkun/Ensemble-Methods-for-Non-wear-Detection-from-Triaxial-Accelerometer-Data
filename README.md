@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/31403148-67a8-42b0-8cde-89024e936ade)# Project Summary:
+# Project Summary:
 
 This study introduces a novel ensemble classification method that leverages the predictions of existing wear-time detection algorithms to improve the accuracy of classifying wear time versus physical activity, sleep, and sedentary time. The Choi [1], Troiano [2], and hidden Markov model [3] algorithms were utilized, and their predictions were combined using two unsupervised ensemble methods [4,5]. Detecting intervals of accelerometer wear time in field-collected data is a challenging problem and may lead to data that does not reflect actual physical activity. By accurately identifying non-wear periods, this method can reduce biases in data analysis and lead to more reliable health outcome assessments.
 
