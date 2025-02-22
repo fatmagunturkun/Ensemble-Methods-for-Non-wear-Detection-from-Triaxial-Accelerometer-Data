@@ -33,7 +33,6 @@ getConfusionMatrix <- function(wt, gt)
     return (confusion)
 }
 
-
 ### Main program
 
 library(lubridate)
