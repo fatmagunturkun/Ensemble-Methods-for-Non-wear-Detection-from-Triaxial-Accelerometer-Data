@@ -18,7 +18,6 @@ data_directory <- 'path/to/data'
 
 subjectids = c(list_of_IDs)
 
-
 directory <-'path/to/outputs'
 # Initialize an empty list to store summary data frames
 
@@ -78,8 +77,7 @@ for (subid in subjectids) {
     confusion_table <- rbind(confusion_table, confusion)
     
   } else {
-    confusion_table <- confusion
-   
+    confusion_table <- confusion 
   }
   
   # plot wear detection graph
