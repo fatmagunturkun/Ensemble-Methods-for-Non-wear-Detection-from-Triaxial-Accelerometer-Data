@@ -170,7 +170,6 @@ shapevector <- function(v, n) {
     return (v)
 }
 
-
 # Compute weartime through HMM 
 weartimeHMM <- function(acc) {
   g <- as.integer(3)  # number of observations
@@ -220,77 +219,17 @@ weartimeHMM <- function(acc) {
     knw <- which.min(magnitude)
     weartime <- rep(1, nrow(macc))
     weartime[hidden_states == (knw-1)] <- 0
-    
     return(weartime)
   }
-  # Fit models with different covariance types
-  weartime <- fit_model('full',FALSE)
-  weartime_s <- fit_model('spherical',FALSE)
-  weartime_d <- fit_model('diag',FALSE)
-  weartime_t <- fit_model('tied',FALSE)
-  
-  weartime_sc <- fit_model('full',TRUE)
-  weartime_s_sc <- fit_model('spherical',TRUE)
-  weartime_d_sc <- fit_model('diag',TRUE)
-  weartime_t_sc <- fit_model('tied',TRUE)
+  # Fit model
+  weartime <- fit_model('spherical',FALSE)
   
   acc$weartimeHMM <- 0
-  
   # for each window, assign all the points in the window the wear classification corresponding to the window
   for (i in 0:floor(nrow(acc)/w)) {
     range <- ((w*i)+1):min(w*(i+1), nrow(acc))
     acc$weartimeHMM[range] <- weartime[i+1]
   }
-  
-  acc$weartimeHMM_s <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_s[range] <- weartime_s[i+1]
-  }
-  
-  acc$weartimeHMM_d <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_d[range] <- weartime_d[i+1]
-  }
-  
-  acc$weartimeHMM_t <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_t[range] <- weartime_t[i+1]
-  }
-  
-  acc$weartimeHMM_sc <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_sc[range] <- weartime_sc[i+1]
-  }
-  
-  acc$weartimeHMM_s_sc <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_s_sc[range] <- weartime_s_sc[i+1]
-  }
-  
-  acc$weartimeHMM_d_sc <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_d_sc[range] <- weartime_d_sc[i+1]
-  }
-  
-  acc$weartimeHMM_t_sc <- 0
-  # for each window, assign all the points in the window the wear classification corresponding to the window
-  for (i in 0:floor(nrow(acc)/w)) {
-    range <- ((w*i)+1):min(w*(i+1), nrow(acc))
-    acc$weartimeHMM_t_sc[range] <- weartime_t_sc[i+1]
-  }
-  
   return (acc)
 }
 
@@ -299,12 +238,8 @@ weartimeHMM <- function(acc) {
 
 runWeartimeDetection <- function(actigraphfile, directory,subid, usefixedchoi,frame, streamFrame, numskiplines,window, tol, tol_upper, nci, days_distinct)
 {
-  #actigraphfile <- paste(toString(subid), '_waist1sec_waistDataTable.csv', sep='')
-  #infile = paste(directory, actigraphfile, sep = '/')
-  
   # read actigraph file, skip everything before the header
   print(paste('Processing file ', actigraphfile))
-  #acc <- read.table(file = actigraphfile, sep = ",", header = T, stringsAsFactors = F)
   acc <- read.table(file = actigraphfile, sep = ",", header = T, stringsAsFactors = F, skip = numskiplines)
   # generate and assign timestamps
   ts <- seq(c(ISOdate(2017,1,1)), by = "sec", length.out = nrow(acc))
@@ -324,7 +259,6 @@ runWeartimeDetection <- function(actigraphfile, directory,subid, usefixedchoi,fr
   acc <- renamecolumn(acc, 'waistwaist_vm', 'Vector.Magnitude')
   
   # run all available weartime detection algorithms
-  # acc <- weartimeChoi(acc, FALSE) # original Choi
   acc <- weartimeChoi(acc, usefixedchoi,frame=frame, streamFrame=streamFrame)
   acc <- weartimeNHANES(acc,window=window, tol=tol, tol_upper=tol_upper, nci=nci, days_distinct=days_distinct)
   acc <-weartimeHMM(acc)
@@ -334,85 +268,3 @@ runWeartimeDetection <- function(actigraphfile, directory,subid, usefixedchoi,fr
   write.table(acc, file = outfile, sep = ",", row.names = F, col.name = T)
   return (acc)
 }
-
-# plot a graph with weartimes
-plotWearGraph <- function(acc, filename)
-{
-  #wear = cbind(matrix(as.numeric(acc1$wearing=='w')), matrix(as.numeric(acc2$wearing=='w')))
-  numplots = 11
-  png(filename, width = 10, height = 22, units="in", res=300)
-  par(mfrow=c(numplots,1))
-  if (with(acc, exists('weartimeChoiX'))) {
-    plot(acc$weartimeChoiX, xlab="", ylab="Choi X", col="blue")
-    plot(acc$weartimeChoiY, xlab="", ylab="Choi Y", col="blue")
-    plot(acc$weartimeChoiZ, xlab="", ylab="Choi Z", col="blue")
-    plot(acc$weartimeChoiVM, xlab="", ylab="Choi VM", col="blue")
-  }
-  if (with(acc, exists('weartimeNhanesX'))) {
-    plot(acc$weartimeNhanesX, xlab="", ylab="NHANES X", col="chartreuse1")
-    plot(acc$weartimeNhanesY, xlab="", ylab="NHANES Y", col="chartreuse2")
-    plot(acc$weartimeNhanesZ, xlab="", ylab="NHANES Z", col="chartreuse3")
-    plot(acc$weartimeNhanesVM, xlab="", ylab="NHANES VM", col="chartreuse4")
-  }
-  
-  if (with(acc, exists('weartimeTruth'))) {
-    plot(acc$weartimeTruth, xlab="", ylab="Actual Weartime", col = "red")
-  }
-  plot(as.numeric(acc$Axis1), xlab="Seconds", ylab="Counts", col = "black", pch=".")
-  title(main="Wear Detection")
-  dev.off()
-}
-
-# retrieve the weartime predictions
-getWeartimePredictions <- function(acc)
-{
-  # make a vector of possible fields
-  names = c('weartimeTruth', 'weartimeChoiX','weartimeChoiY','weartimeChoiZ','weartimeChoiVM', 'weartimeNhanesX', 'weartimeNhanesY', 'weartimeNhanesZ', 'weartimeNhanesVM',
-            'weartimeHMM', 'weartimeHMM_s', 'weartimeHMM_d','weartimeHMM_t','weartimeHMM_sc', 
-            'weartimeHMM_s_sc', 'weartimeHMM_d_sc','weartimeHMM_t_sc'
-  )
-  
-  # make a vector with only the fields in the structure
-  vector = c()
-  for (v in names) {
-    if (with(acc, exists(v))) {
-      vector <- c(vector, v)
-    }
-  }
-  
-  # retrieve the weartime predictions
-  wt <- acc[, vector]
-  return (wt)
-}
-
-# plot a graph with weartimes
-plotWearDisagreement <- function(acc, filename)
-{
-  numplots = 11
-  png(filename, width = 10, height = 22, units="in", res=300)
-  par(mfrow=c(numplots,1))
-  if (with(acc, exists('weartimeChoi'))) {
-    plot(acc$weartimeChoiX, xlab="", ylab="Choi X", col="blue")
-    plot(acc$weartimeChoiY, xlab="", ylab="Choi Y", col="blue")
-    plot(acc$weartimeChoiZ, xlab="", ylab="Choi Z", col="blue")
-    plot(acc$weartimeChoiVM, xlab="", ylab="Choi VM", col="blue")
-  }
-  if (with(acc, exists('weartimeNhanesX'))) {
-    plot(acc$weartimeNhanesX, xlab="", ylab="NHANES X", col="chartreuse1")
-    plot(acc$weartimeNhanesY, xlab="", ylab="NHANES Y", col="chartreuse2")
-    plot(acc$weartimeNhanesZ, xlab="", ylab="NHANES Z", col="chartreuse3")
-    plot(acc$weartimeNhanesVM, xlab="", ylab="NHANES VM", col="chartreuse4")
-  }
-  
-  if (with(acc, exists('weartimeTruth'))) {
-    plot(acc$weartimeTruth, xlab="", ylab="Actual Weartime", col = "red")
-  }
-  plot(as.numeric(acc$Axis1), xlab="Seconds", ylab="Counts", col = "black", pch=".")
-  title(main="Wear Detection")
-  dev.off()
-}
-
-### Main program
-
-library(lubridate)
-library(stringr)
