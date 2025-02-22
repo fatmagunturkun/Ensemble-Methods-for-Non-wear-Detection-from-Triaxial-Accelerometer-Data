@@ -21,7 +21,10 @@ The repo consists of five files listed below:
 
  1. Choi, L., Liu, Z., Matthews, C.E., & Buchowski, M.S. (2011). Validation of accelerometer wear and non-wear time classification algorithm. Medicine & Science in Sports & Exercise, 43(2), 357–364.  
  2. Troiano RP, Berrigan D, Dodd KW, Mâsse LC, Tilert T, McDowell M. Physical activity in the United States measured by accelerometer. Med Sci Sports Exerc 2008;40(1):181-8. PubMed. 
- 3. Randhawa, S., Sharma, M., Fiterau, M., Banda, J. A., Haydel, F., Kapphahn, K., Matheson, D., Moore, H., IV, Ball, R. L., Kushida, C., Delp, S., Wall, D. P., Robinson, T., & Desai, M. (2023). Statistical Learning Methods to Identify Nonwear Periods From Accelerometer Data. Journal for the Measurement of Physical Behaviour, 6(2), 124-133. Retrieved May 4, 2024, from https://doi.org/10.1123/jmpb.2022-0034. 
- 4. Emmanouil Antonios Platanios, Avrim Blum, and Tom M Mitchell. Estimating Accuracy from Unlabeled Data. In Conference on Uncertainty in Artificial Intelligence, pages 1-10, 2014. 
- 5. Mehmet Eren Ahsen, Robert M Vogel, Gustavo A Stolovitzky, Unsupervised Evaluation and Weighted Aggregation of Ranked Classification Predictions. Journal of Machine Learning Research 20 (2019) 1-40.
- 6. Robinson TN, Matheson DM, Desai M, Wilson DM, Weintraub DL, Haskell WL, et al. Family, community and clinic collaboration to treat overweight and obese children: Stanford GOALS—a randomized controlled trial of a three-year, multi-component, multi-level, multi-setting intervention. Contemp Clin Trials. 2013;36:421–435. 10.1016/j.cct.2013.09.001 
+ 3. Randhawa, S., Sharma, M., Fiterau, M., Banda, J. A., Haydel, F., Kapphahn, K., Matheson, D., Moore, H., IV, Ball, R. L., Kushida, C., Delp, S., Wall, D. P., Robinson, T., & Desai, M. (2023). Statistical Learning Methods to Identify Nonwear Periods From Accelerometer Data. Journal for the Measurement of Physical Behaviour, 6(2), 124-133. Retrieved May 4, 2024, from https://doi.org/10.1123/jmpb.2022-0034.
+
+![Performance_metrics.png)
+
+ 5. Emmanouil Antonios Platanios, Avrim Blum, and Tom M Mitchell. Estimating Accuracy from Unlabeled Data. In Conference on Uncertainty in Artificial Intelligence, pages 1-10, 2014. 
+ 6. Mehmet Eren Ahsen, Robert M Vogel, Gustavo A Stolovitzky, Unsupervised Evaluation and Weighted Aggregation of Ranked Classification Predictions. Journal of Machine Learning Research 20 (2019) 1-40.
+ 7. Robinson TN, Matheson DM, Desai M, Wilson DM, Weintraub DL, Haskell WL, et al. Family, community and clinic collaboration to treat overweight and obese children: Stanford GOALS—a randomized controlled trial of a three-year, multi-component, multi-level, multi-setting intervention. Contemp Clin Trials. 2013;36:421–435. 10.1016/j.cct.2013.09.001 
