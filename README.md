@@ -26,4 +26,3 @@ The repo consists of five files listed below:
  6. Mehmet Eren Ahsen, Robert M Vogel, Gustavo A Stolovitzky, Unsupervised Evaluation and Weighted Aggregation of Ranked Classification Predictions. Journal of Machine Learning Research 20 (2019) 1-40.
  7. Robinson TN, Matheson DM, Desai M, Wilson DM, Weintraub DL, Haskell WL, et al. Family, community and clinic collaboration to treat overweight and obese children: Stanford GOALS—a randomized controlled trial of a three-year, multi-component, multi-level, multi-setting intervention. Contemp Clin Trials. 2013;36:421–435. 10.1016/j.cct.2013.09.001
 
-![Performance metrics](./Performance_metrics.png) 
