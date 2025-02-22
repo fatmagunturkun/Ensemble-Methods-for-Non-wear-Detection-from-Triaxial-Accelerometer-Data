@@ -1,10 +1,9 @@
-source('WeartimeEnsemble.R')
+source('confusion_matrix.R')
 
 # Load the installed package
 library("summa")
 library(tidyr)
 library(dplyr)
-
 
 ############################################################
 #apply SUMMA and BI 
@@ -12,7 +11,7 @@ library(dplyr)
 outputdirectory <- 'path/to/outputs'
 
 # List of models to keep
-models_to_keep <- c('weartimeChoiX','weartimeChoiY','weartimeChoiZ','weartimeNhanesX','weartimeNhanesY','weartimeNhanesZ','weartimeHMM')
+models_to_keep <- c('weartimeChoiX','weartimeChoiY','weartimeChoiZ','weartimeChoiVM','weartimeNhanesX','weartimeNhanesY','weartimeNhanesZ','weartimeNhanesVM','weartimeHMM')
 
 subjectids = c(list_of_IDs)
 
@@ -107,6 +106,7 @@ plotWearGraph <- function(acc, filename)
     plot(acc$weartimeChoiX, xlab="", ylab="Choi X", col=choi_palette[2],cex.lab=1.4)
     plot(acc$weartimeChoiY, xlab="", ylab="Choi Y", col=choi_palette[3],cex.lab=1.4)
     plot(acc$weartimeChoiZ, xlab="", ylab="Choi Z", col=choi_palette[4],cex.lab=1.4)
+    plot(acc$weartimeChoiVM, xlab="", ylab="Choi VM", col=choi_palette[4],cex.lab=1.4)
   }
   
   # Plotting NHANES data if available
@@ -114,23 +114,22 @@ plotWearGraph <- function(acc, filename)
     plot(acc$weartimeNhanesX, xlab="", ylab="NHANES X", col=nhanes_palette[2],cex.lab=1.3)
     plot(acc$weartimeNhanesY, xlab="", ylab="NHANES Y", col=nhanes_palette[3],cex.lab=1.3)
     plot(acc$weartimeNhanesZ, xlab="", ylab="NHANES Z", col=nhanes_palette[4],cex.lab=1.3)
+    plot(acc$weartimeNhanesZ, xlab="", ylab="NHANES VM", col=nhanes_palette[4],cex.lab=1.3)
   }
   
   # Plotting HMM data if available
-  if (with(acc, exists('weartimeHMM_s'))) {
-    plot(acc$weartimeHMM_s, xlab="", ylab="HMM", col=hmm_palette,cex.lab=1.4)
+  if (with(acc, exists('weartimeHMM'))) {
+    plot(acc$weartimeHMM, xlab="", ylab="HMM", col=hmm_palette,cex.lab=1.4)
   }
   
   # Plotting SUMMA data if available
   if (with(acc, exists('summa'))) {
     plot(acc$summa, xlab="", ylab="SUMMA", col=summa_palette[2],cex.lab=1.4)
-    #plot(acc$summa_2, xlab="", ylab="SUMMA2", col=summa_palette[4])
   }
   
   # Plotting BI data if available
   if (with(acc, exists('bi'))) {
     plot(acc$bi, xlab="", ylab="BI", col=bi_palette[2],cex.lab=1.4)
-    #plot(acc$bi_2, xlab="", ylab="BI2", col=bi_palette[4])
   }
   
   if (with(acc, exists('weartimeTruth'))) {
